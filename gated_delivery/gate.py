@@ -311,6 +311,7 @@ class Gate:
         elif self.second_look:
             st['snapshot'] = self.snapshot()
             if self.review_file.exists():                      # an old review must not pass for a new one
+                self.work.mkdir(parents=True, exist_ok=True)
                 os.replace(self.review_file, self.work / 'review.stale.json')
             st['review'] = 'asked'
             self._set(st, SECOND_LOOK, verdict)

@@ -28,7 +28,7 @@ SLOT = re.compile(r'\{\{(\w+)\}\}')
 
 
 def default_template(role: str) -> str:
-    return resources.files('gated_delivery').joinpath('prompts', NAMES[role]).read_text(encoding='utf-8')
+    return (resources.files('gated_delivery') / 'prompts' / NAMES[role]).read_text(encoding='utf-8')
 
 
 def template(role: str, override_dir: Path | str | None = None) -> str:

@@ -4,7 +4,7 @@ import os
 import shutil
 import unittest
 
-from gated_delivery import Gate, GateError
+from gated_delivery import Gate, GateError, Verdict
 from gated_delivery.gate import MANIFEST
 
 from tests.support import FolderTest, put
@@ -53,6 +53,15 @@ class Transitions(FolderTest):
         self.assertEqual(sorted(st['snapshot']), ['art.json', 'parts/a.txt'])
         self.assertEqual((self.dir / '.gate/before-review/parts/a.txt').read_text(), 'A')
         self.assertFalse((self.dir / 'review.json').exists())
+        self.assertTrue((self.dir / '.gate/review.stale.json').exists())
+
+    def test_an_empty_artifact_that_passes_still_gets_its_second_look(self):
+        def passes(folder):
+            return Verdict()
+        g = Gate(self.dir, passes, ['nothing-matches-*'])
+        self.review({'text': 'stale'})
+        st = g.step()
+        self.assertEqual((st['next'], st['snapshot']), ('second-look', {}))
         self.assertTrue((self.dir / '.gate/review.stale.json').exists())
 
     def test_second_look_without_comments_delivers(self):

@@ -57,7 +57,7 @@ There is no third attempt by default. If two fresh sessions can't pass, I'd rath
 ## Try it
 
 ```sh
-python3 -m unittest -v                                                   # 67 tests, offline, no model
+python3 -m unittest -v                                                   # 68 tests, offline, no model
 python3 -m gated_delivery faults examples/service-config/faults.json     # 17 planted faults, all must be caught
 python3 examples/service-config/demo.py                                  # every path through the gate, with fake sessions
 ```
@@ -153,6 +153,7 @@ A check that never fails proves nothing. `gated-delivery faults FILE` takes a ba
 - **The check is the whole guarantee.** The gate enforces exactly what the check expresses. A weak check passes weak work.
 - **Sessions can write anywhere in the folder**, including the state file and the snapshot. If you don't trust them, keep the state outside (`--state`) and sandbox the session command. A tampered snapshot still has to pass the check, or it ends in `not-delivered`.
 - A session cut off by a crash is judged as it stands and counts toward the limit. Delete the state file to start over.
+- An output folder belongs to one artifact folder. The gate clears its own output on every step that doesn't deliver, so two folders pointed at the same `--out` wipe each other. The default, `delivered/` inside the folder, can't collide.
 - Commands run through `/bin/sh`, so POSIX only.
 - No cost or token accounting. Put budgets and timeouts in the session command, or use `--session-timeout`.
 
