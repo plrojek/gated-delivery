@@ -1,0 +1,8 @@
+{
+ "check": "python3 {here}/checks.py {dir}",
+ "artifact": ["config.json"],
+ "task": "task.md",
+ "attempts": 2,
+ "check_timeout": 30,
+ "session_timeout": 60
+}

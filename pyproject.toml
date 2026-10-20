@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gated-delivery"
+version = "0.1.0"
+description = "A model proposes, code disposes: a check, one repair, a second look, one revision, or not delivered."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Paweł Rojek" }]
+keywords = ["llm", "agents", "evaluation", "quality gate", "claude"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: POSIX",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.urls]
+Origin = "https://github.com/plrojek/garden-planner"
+
+[project.scripts]
+gated-delivery = "gated_delivery.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["gated_delivery"]
+
+[tool.hatch.build.targets.sdist]
+include = ["gated_delivery", "tests", "examples", "README.md", "LICENSE"]

@@ -1,0 +1,11 @@
+{
+  "name": "payments-api",
+  "port": 8080,
+  "replicas": 3,
+  "log_level": "info",
+  "health_path": "/healthz",
+  "timeouts": {
+    "connect_ms": 500,
+    "request_ms": 3000
+  }
+}
